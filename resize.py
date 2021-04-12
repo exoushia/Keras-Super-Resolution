@@ -5,6 +5,8 @@ from scipy import misc
 import numpy as np
 import argparse
 import cv2
+from PIL import Image
+
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -31,8 +33,7 @@ image = image[0:h, 0:w]
 
 # resize the input image using bicubic interpolation then write the
 # baseline image to disk
-scaled = misc.imresize(image, config.SCALE / 1.0,
-	interp="bicubic")
+scaled = np.array(Image.fromarray(scaled).resize((scaled.shape[0]*config.SCALE, scaled.shape[1]*config.SCALE), resample=3))
 cv2.imwrite(args["baseline"], scaled)
 
 # allocate memory for the output image
@@ -55,9 +56,9 @@ for y in range(0, h - config.INPUT_DIM + 1, config.LABEL_SIZE):
 
 # remove any of the black borders in the output image caused by the
 # padding, then clip any values that fall outside the range [0, 255]
-output = output[config.PAD:h - ((h % config.INPUT_DIM) + config.PAD),
-	config.PAD:w - ((w % config.INPUT_DIM) + config.PAD)]
-output = np.clip(output, 0, 255).astype("uint8")
+# output = output[config.PAD:h - ((h % config.INPUT_DIM) + config.PAD),
+# 	config.PAD:w - ((w % config.INPUT_DIM) + config.PAD)]
+# output = np.clip(output, 0, 255).astype("uint8")
 
 # write the output image to disk
 cv2.imwrite(args["output"], output)

@@ -7,6 +7,8 @@ import shutil
 import random
 import cv2
 import os
+from PIL import Image
+
 
 # if the output directories do not exist, create them
 for p in [config.IMAGES, config.LABELS]:
@@ -38,10 +40,8 @@ for imagePath in imagePaths:
 	# original size -- this will process allows us to generate low
 	# resolution inputs that we'll then learn to reconstruct the high
 	# resolution versions from
-	scaled = misc.imresize(image, 1.0 / config.SCALE,
-		interp="bicubic")
-	scaled = misc.imresize(scaled, config.SCALE / 1.0,
-		interp="bicubic")
+	scaled = np.array(Image.fromarray(image).resize((image.shape[0]//config.SCALE , image.shape[1]//config.SCALE), resample=3))
+	scaled = np.array(Image.fromarray(scaled).resize((scaled.shape[0]*config.SCALE , scaled.shape[1]*config.SCALE), resample=3))
 
 	# slide a window from left-to-right and top-to-bottom
 	for y in range(0, h - config.INPUT_DIM + 1, config.STRIDE):

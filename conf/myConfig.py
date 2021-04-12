@@ -19,18 +19,18 @@ MODEL_PATH = os.path.sep.join([BASE_OUTPUT, "srcnn.model"])
 PLOT_PATH = os.path.sep.join([BASE_OUTPUT, "plot.png"])
 
 # initialize the batch size and number of epochs for training
-BATCH_SIZE = 128
-NUM_EPOCHS = 10
+BATCH_SIZE = 16
+NUM_EPOCHS = 2
 
 # initialize the scale (the factor in which we want to learn how to
 # enlarge images by) along with the input width and height dimensions
 # to our SRCNN
-SCALE = 2.0
+SCALE = 4.0
 INPUT_DIM = 33
 
 # the label size should be the output spatial dimensions of the SRCNN
 # while our padding ensures we properly crop the label ROI
-LABEL_SIZE = 21
+LABEL_SIZE = 140
 PAD = int((INPUT_DIM - LABEL_SIZE) / 2.0)
 
 # the stride controls the step size of our sliding window

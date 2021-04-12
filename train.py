@@ -10,6 +10,8 @@ from keras.optimizers import Adam
 import matplotlib.pyplot as plt
 import numpy as np
 import h5py
+from PIL import Image
+
 
 print("VERSION")
 print(h5py.version.info)
